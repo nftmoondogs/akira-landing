@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AKIRA — Admin Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@700;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#0a0a0a; color:#fff; font-family:'Inter',sans-serif; min-height:100vh; }
+    body::after { content:''; position:fixed; inset:0; z-index:9999; pointer-events:none;
+      background:repeating-linear-gradient(0deg,rgba(0,0,0,.15) 0px,rgba(0,0,0,.15) 1px,transparent 1px,transparent 3px);
+      mix-blend-mode:multiply; }
+
+    /* ===== LOGIN ===== */
+    .login-overlay { position:fixed; inset:0; background:#0a0a0a; z-index:5000;
+      display:flex; align-items:center; justify-content:center; flex-direction:column; gap:20px; }
+    .login-overlay.hidden { display:none; }
+    .login-box { background:#111; border:1px solid #222; border-radius:12px; padding:40px 36px;
+      text-align:center; max-width:380px; width:90%; }
+    .login-box h2 { font-family:'Orbitron',sans-serif; font-size:18px; margin-bottom:8px;
+      text-transform:uppercase; letter-spacing:2px; }
+    .login-box p { font-size:12px; color:#666; margin-bottom:24px; }
+    .login-input { width:100%; padding:12px 16px; background:#0a0a0a; border:1px solid #333;
+      border-radius:8px; color:#fff; font-family:'Inter',sans-serif; font-size:14px;
+      outline:none; transition:border-color .2s; }
+    .login-input:focus { border-color:#ff2d78; }
+    .login-btn { width:100%; padding:12px; margin-top:12px; background:#ff2d78; color:#fff;
+      border:none; border-radius:8px; font-family:'Space Grotesk',sans-serif; font-size:13px;
+      font-weight:700; letter-spacing:1px; text-transform:uppercase; cursor:pointer;
+      transition:background .2s; }
+    .login-btn:hover { background:#cc0044; }
+    .login-error { color:#ff4444; font-size:12px; margin-top:8px; min-height:16px; }
+
+    /* ===== ADMIN PANEL ===== */
+    .admin-wrap { display:none; }
+    .admin-wrap.visible { display:block; }
+    .admin-topbar { display:flex; align-items:center; justify-content:space-between;
+      padding:16px 40px; border-bottom:1px solid #1a1a1a; }
+    .admin-topbar-left { display:flex; align-items:center; gap:12px; }
+    .admin-topbar-logo { height:20px; filter:brightness(0) invert(1); }
+    .admin-topbar-badge { font-family:'Space Grotesk',sans-serif; font-size:10px;
+      background:#ff2d78; color:#fff; padding:3px 10px; border-radius:4px;
+      text-transform:uppercase; letter-spacing:1px; font-weight:700; }
+    .admin-logout { font-size:12px; color:#666; cursor:pointer; text-decoration:none;
+      font-family:'Space Grotesk',sans-serif; letter-spacing:1px; text-transform:uppercase;
+      transition:color .2s; }
+    .admin-logout:hover { color:#ff4444; }
+
+    .admin-container { max-width:900px; margin:0 auto; padding:40px; }
+    .admin-section { margin-bottom:40px; background:#111; border:1px solid #1a1a1a;
+      border-radius:12px; overflow:hidden; }
+    .admin-section-header { display:flex; align-items:center; justify-content:space-between;
+      padding:16px 20px; background:#161616; border-bottom:1px solid #1a1a1a; cursor:pointer;
+      user-select:none; }
+    .admin-section-header h3 { font-family:'Space Grotesk',sans-serif; font-size:13px;
+      text-transform:uppercase; letter-spacing:1.5px; color:#fff; }
+    .admin-section-header .page-tag { font-size:10px; color:#666; font-family:'Space Grotesk',sans-serif;
+      letter-spacing:1px; background:#0a0a0a; padding:3px 8px; border-radius:4px; }
+    .admin-section-body { padding:20px; display:none; }
+    .admin-section.open .admin-section-body { display:block; }
+    .admin-section.open .admin-section-header { border-bottom:1px solid #222; }
+
+    .field-group { margin-bottom:16px; }
+    .field-label { display:block; font-family:'Space Grotesk',sans-serif; font-size:11px;
+      text-transform:uppercase; letter-spacing:1px; color:#666; margin-bottom:6px; }
+    .field-input, .field-textarea { width:100%; padding:10px 14px; background:#0a0a0a;
+      border:1px solid #222; border-radius:6px; color:#fff; font-family:'Inter',sans-serif;
+      font-size:13px; outline:none; transition:border-color .2s; }
+    .field-input:focus, .field-textarea:focus { border-color:#ff2d78; }
+    .field-textarea { min-height:80px; resize:vertical; }
+
+    .admin-save-row { display:flex; gap:12px; justify-content:flex-end; margin-top:20px;
+      padding-top:20px; border-top:1px solid #1a1a1a; }
+    .btn-save { padding:10px 24px; background:#ff2d78; color:#fff; border:none;
+      border-radius:6px; font-family:'Space Grotesk',sans-serif; font-size:12px;
+      font-weight:700; letter-spacing:1px; text-transform:uppercase; cursor:pointer;
+      transition:background .2s; }
+    .btn-save:hover { background:#cc0044; }
+    .btn-reset { padding:10px 24px; background:transparent; color:#666; border:1px solid #333;
+      border-radius:6px; font-family:'Space Grotesk',sans-serif; font-size:12px;
+      font-weight:600; letter-spacing:1px; text-transform:uppercase; cursor:pointer;
+      transition:all .2s; }
+    .btn-reset:hover { border-color:#ff4444; color:#ff4444; }
+
+    .toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(100px);
+      background:#1a1a1a; color:#fff; padding:12px 28px; border-radius:8px;
+      font-family:'Space Grotesk',sans-serif; font-size:12px; letter-spacing:1px;
+      border:1px solid #333; z-index:6000; transition:transform .3s ease; }
+    .toast.show { transform:translateX(-50%) translateY(0); }
+
+    .admin-footer { text-align:center; padding:20px; font-size:11px; color:#333;
+      font-family:'Space Grotesk',sans-serif; letter-spacing:1px; }
+  </style>
+</head>
+<body>
+
+<!-- ===== LOGIN SCREEN ===== -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <h2>Admin Panel</h2>
+    <p>Enter password to manage site content</p>
+    <input type="password" class="login-input" id="loginPassword" placeholder="Password" autofocus>
+    <button class="login-btn" id="loginBtn">Access Panel</button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- ===== ADMIN PANEL ===== -->
+<div class="admin-wrap" id="adminWrap">
+  <nav class="admin-topbar">
+    <div class="admin-topbar-left">
+      <img src="assets/akira-logo-footer.png" alt="AKIRA" class="admin-topbar-logo">
+      <span class="admin-topbar-badge">Admin</span>
+    </div>
+    <a class="admin-logout" id="logoutBtn">Logout</a>
+  </nav>
+
+  <div class="admin-container" id="adminContainer"></div>
+
+  <div class="admin-footer">AKIRA ADMIN PANEL — CHANGES SAVED LOCALLY</div>
+</div>
+
+<div class="toast" id="toast">Changes saved!</div>
+
+<script>
+// ╔═══════════════════════════════════════════════════════════════════╗
+// ║  🔐  ADMIN CONFIG                                                ║
+// ╚═══════════════════════════════════════════════════════════════════╝
+const ADMIN_PASSWORD = "akira2026";  // ← CHANGE THIS PASSWORD
+
+// ╔═══════════════════════════════════════════════════════════════════╗
+// ║  📝  EDITABLE FIELDS — Add/remove fields here                   ║
+// ╚═══════════════════════════════════════════════════════════════════╝
+// Each section defines fields for a page/area. Stored in localStorage.
+// key = localStorage key, label = display name, default = fallback value
+const SECTIONS = [
+  {
+    title: "Homepage — Hero",
+    page: "index.html",
+    fields: [
+      { key: "hero_title", label: "Hero Title", default: "THE AKIRA COLLECTION", type: "text" },
+      { key: "hero_subtitle", label: "Hero Subtitle", default: "A CYBERPUNK ANIME SAGA OF 5,000 HAND-DRAWN NFTs ON THE ETHEREUM BLOCKCHAIN", type: "textarea" },
+      { key: "hero_btn_primary", label: "Primary Button Text", default: "Mint Now", type: "text" },
+      { key: "hero_btn_secondary", label: "Secondary Button Text", default: "Watch Trailer", type: "text" },
+    ]
+  },
+  {
+    title: "Homepage — Promo Card",
+    page: "index.html",
+    fields: [
+      { key: "promo_tag", label: "Tag Label", default: "NFT COLLECTION", type: "text" },
+      { key: "promo_title", label: "Card Title", default: "Get GTD Whitelisted", type: "text" },
+      { key: "promo_date", label: "Date / Subtitle", default: "Mint Date: 3 June 2026", type: "text" },
+      { key: "promo_btn", label: "Button Text", default: "VISIT", type: "text" },
+    ]
+  },
+  {
+    title: "Homepage — Collection Section",
+    page: "index.html",
+    fields: [
+      { key: "collection_title", label: "Section Title", default: "THE COLLECTION", type: "text" },
+      { key: "collection_subtitle", label: "Section Subtitle", default: "5,000 unique avatars with over 400 hand-drawn traits", type: "text" },
+    ]
+  },
+  {
+    title: "Homepage — Mint Section",
+    page: "index.html",
+    fields: [
+      { key: "mint_heading", label: "Heading", default: "READY TO ENTER?", type: "text" },
+      { key: "mint_subtext", label: "Subtext", default: "Join the Akira universe. Your story begins with a single NFT.", type: "text" },
+      { key: "mint_btn", label: "Button Text", default: "GET WHITELISTED NOW", type: "text" },
+    ]
+  },
+  {
+    title: "Trailer Page",
+    page: "trailer.html",
+    fields: [
+      { key: "trailer_title", label: "Video Title", default: "Akira // Genesis", type: "text" },
+      { key: "trailer_big_title", label: "Big Title", default: "GENESIS", type: "text" },
+      { key: "trailer_video_url", label: "YouTube Embed URL", default: "https://www.youtube.com/embed/Ywwp0PXHk7k", type: "text" },
+    ]
+  },
+  {
+    title: "Trailer Page — Scenes",
+    page: "trailer.html",
+    fields: [
+      { key: "scene_1_title", label: "Scene 1 Title", default: "THE GATE", type: "text" },
+      { key: "scene_1_tag", label: "Scene 1 Tag", default: "SCENE 1", type: "text" },
+      { key: "scene_2_title", label: "Scene 2 Title", default: "GROWING UP", type: "text" },
+      { key: "scene_2_tag", label: "Scene 2 Tag", default: "SCENE 2", type: "text" },
+      { key: "scene_3_title", label: "Scene 3 Title", default: "THE MARKET", type: "text" },
+      { key: "scene_3_tag", label: "Scene 3 Tag", default: "SCENE 3", type: "text" },
+      { key: "scene_4_title", label: "Scene 4 Title", default: "THE SWORD", type: "text" },
+      { key: "scene_4_tag", label: "Scene 4 Tag", default: "SCENE 4", type: "text" },
+      { key: "scene_5_title", label: "Scene 5 Title", default: "THE SHADOWS", type: "text" },
+      { key: "scene_5_tag", label: "Scene 5 Tag", default: "SCENE 5", type: "text" },
+      { key: "scene_6_title", label: "Scene 6 Title", default: "MISSING", type: "text" },
+      { key: "scene_6_tag", label: "Scene 6 Tag", default: "SCENE 6", type: "text" }
+    ]
+  },
+  {
+    title: "Footer",
+    page: "index.html",
+    fields: [
+      { key: "footer_tagline", label: "Mailing List Text", default: "Sign up for the mailing list", type: "text" },
+      { key: "footer_copyright", label: "Copyright Text", default: "© 2026 AKIRA Labs. All rights reserved.", type: "text" },
+    ]
+  },
+  {
+    title: "Social Links",
+    page: "All Pages",
+    fields: [
+      { key: "social_x", label: "X (Twitter) URL", default: "https://x.com/TheAkiraEth", type: "text" },
+      { key: "social_youtube", label: "YouTube URL", default: "https://www.youtube.com/@AkiraETH", type: "text" },
+      { key: "social_instagram", label: "Instagram URL", default: "", type: "text" },
+      { key: "social_tiktok", label: "TikTok URL", default: "", type: "text" },
+    ]
+  },
+  {
+    title: "Legal Pages — Metadata",
+    page: "license / terms / privacy",
+    fields: [
+      { key: "legal_company", label: "Company Name", default: "AKIRA Labs", type: "text" },
+      { key: "legal_email", label: "Contact Email", default: "help@akira.com", type: "text" },
+      { key: "legal_website", label: "Website URL", default: "https://www.akiraeth.com", type: "text" },
+    ]
+  },
+];
+
+// ===== LOGIN LOGIC =====
+const loginOverlay = document.getElementById('loginOverlay');
+const adminWrap = document.getElementById('adminWrap');
+const loginBtn = document.getElementById('loginBtn');
+const loginPassword = document.getElementById('loginPassword');
+const loginError = document.getElementById('loginError');
+const logoutBtn = document.getElementById('logoutBtn');
+
+// Check if already logged in (session only)
+if (sessionStorage.getItem('akira_admin') === 'true') {
+  loginOverlay.classList.add('hidden');
+  adminWrap.classList.add('visible');
+}
+
+loginBtn.addEventListener('click', doLogin);
+loginPassword.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+function doLogin() {
+  if (loginPassword.value === ADMIN_PASSWORD) {
+    sessionStorage.setItem('akira_admin', 'true');
+    loginOverlay.classList.add('hidden');
+    adminWrap.classList.add('visible');
+    loginError.textContent = '';
+  } else {
+    loginError.textContent = 'Incorrect password';
+    loginPassword.value = '';
+    loginPassword.focus();
+  }
+}
+
+logoutBtn.addEventListener('click', () => {
+  sessionStorage.removeItem('akira_admin');
+  loginOverlay.classList.remove('hidden');
+  adminWrap.classList.remove('visible');
+  loginPassword.value = '';
+  loginPassword.focus();
+});
+
+// ===== BUILD ADMIN SECTIONS =====
+const container = document.getElementById('adminContainer');
+
+SECTIONS.forEach((section, si) => {
+  const div = document.createElement('div');
+  div.className = 'admin-section';
+  div.innerHTML = `
+    <div class="admin-section-header" onclick="this.parentElement.classList.toggle('open')">
+      <h3>${section.title}</h3>
+      <span class="page-tag">${section.page}</span>
+    </div>
+    <div class="admin-section-body">
+      ${section.fields.map((f, fi) => {
+        const stored = localStorage.getItem('akira_' + f.key);
+        const val = stored !== null ? stored : f.default;
+        const escaped = val.replace(/"/g, '&quot;').replace(/</g, '&lt;');
+        if (f.type === 'textarea') {
+          return `<div class="field-group">
+            <label class="field-label">${f.label}</label>
+            <textarea class="field-textarea" data-key="${f.key}">${val}</textarea>
+          </div>`;
+        }
+        return `<div class="field-group">
+          <label class="field-label">${f.label}</label>
+          <input class="field-input" data-key="${f.key}" value="${escaped}">
+        </div>`;
+      }).join('')}
+      <div class="admin-save-row">
+        <button class="btn-reset" onclick="resetSection(${si})">Reset to Defaults</button>
+        <button class="btn-save" onclick="saveSection(${si})">Save Changes</button>
+      </div>
+    </div>
+  `;
+  container.appendChild(div);
+});
+
+// ===== SAVE / RESET =====
+function saveSection(si) {
+  const section = SECTIONS[si];
+  const sectionEl = container.children[si];
+  section.fields.forEach(f => {
+    const input = sectionEl.querySelector(`[data-key="${f.key}"]`);
+    if (input) {
+      localStorage.setItem('akira_' + f.key, input.value);
+    }
+  });
+  showToast('Changes saved! Refresh site pages to see updates.');
+}
+
+function resetSection(si) {
+  const section = SECTIONS[si];
+  const sectionEl = container.children[si];
+  section.fields.forEach(f => {
+    localStorage.removeItem('akira_' + f.key);
+    const input = sectionEl.querySelector(`[data-key="${f.key}"]`);
+    if (input) input.value = f.default;
+  });
+  showToast('Reset to defaults! Refresh site pages.');
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+</script>
+
+</body>
+</html>

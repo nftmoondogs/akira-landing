@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AKIRA — Genesis NFT Collection</title>
+  <meta name="description" content="AKIRA is a premium cyberpunk NFT collection. 10,000 unique digital collectibles on Ethereum.">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ===== TOP NAVIGATION ===== -->
+<nav class="nav-topbar" id="nav-topbar">
+  <a href="#hero" class="nav-logo">
+    <img src="assets/akira-logo.png" alt="AKIRA NFT" class="nav-logo-img">
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#collection">Collection</a></li>
+    <li><a href="#mint">Mint</a></li>
+  </ul>
+
+  <a href="#mint" class="nav-cta">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+    Get Whitelist Now
+  </a>
+</nav>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main class="main-content">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <video class="hero-video" id="hero-video" muted loop playsinline preload="metadata">
+      <source src="assets/hero-loop.mp4" type="video/mp4">
+    </video>
+    <div class="hero-gradient"></div>
+    <div class="hero-hover-zone" id="hero-hover-zone"></div>
+    <div class="hero-grid-overlay"></div>
+    <div class="hero-particles"></div>
+
+    <div class="hero-content">
+      <div class="hero-tag fade-up">Genesis Collection</div>
+      <h1 class="hero-title fade-up">
+        <span class="line">TAKE</span>
+        <span class="line glitch-target" data-text="BACK">BACK</span>
+        <span class="line accent glitch-target" data-text="THE CITY.">THE CITY.</span>
+      </h1>
+      <p class="hero-desc fade-up" data-admin="hero_subtitle">
+        2,222 story-heavy NFT collectibles forged in the neon glow of Neo-Tokyo.
+        Each AKIRA token is your key to the decentralized underground.
+      </p>
+      <div class="hero-actions fade-up">
+        <a href="#mint" class="btn-primary" data-admin="hero_btn_primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Mint Now
+        </a>
+        <a href="trailer.html" class="btn-outline" data-admin="hero_btn_secondary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
+          Watch Trailer
+        </a>
+      </div>
+
+      <div class="hero-stats fade-up">
+        <div class="stat-item">
+          <div class="stat-value" data-count="2222" data-suffix="">0</div>
+          <div class="stat-label">Unique NFTs</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" data-count="514" data-suffix="">0</div>
+          <div class="stat-label">Minted</div>
+        </div>
+        <div class="stat-item stat-bar-col">
+          <div class="mint-progress">
+            <div class="mint-progress-bar" data-progress="23.1"></div>
+          </div>
+          <div class="stat-label">Mint Progress Bar</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Promo Card -->
+    <div class="promo-float" id="promo-float">
+      <img src="assets/promo-card.png" alt="AKIRA Card" class="promo-float-card">
+      <div class="promo-float-info">
+        <span class="promo-float-tag" data-admin="promo_tag">NFT Collection</span>
+        <strong class="promo-float-title" data-admin="promo_title">Get GTD Whitelisted</strong>
+        <span class="promo-float-date" data-admin="promo_date">Mint Date: 3 June 2026</span>
+      </div>
+      <a href="#mint" class="promo-float-btn" data-admin="promo_btn">VISIT</a>
+    </div>
+  </section>
+
+  <!-- COLLECTION -->
+  <section class="section collection-section" id="collection">
+    <div class="section-header">
+      <div class="section-tag fade-up">Featured Drops</div>
+      <h2 class="section-title fade-up" data-admin="collection_title">The Collection</h2>
+      <p class="section-subtitle fade-up" data-admin="collection_subtitle">Hand-crafted digital art fusing anime aesthetics with cyberpunk lore. Every piece tells a story from the neon-drenched streets.</p>
+    </div>
+
+    <!-- Row 1: scrolls LEFT -->
+    <div class="carousel-row">
+      <div class="carousel-track">
+        <div class="carousel-card"><img src="assets/nft-1.png" alt><span class="carousel-title">Shao</span></div>
+        <div class="carousel-card"><img src="assets/carousel-1.png" alt><span class="carousel-title">Mei Ling</span></div>
+        <div class="carousel-card"><img src="assets/nft-2.png" alt><span class="carousel-title">Rizan</span></div>
+        <div class="carousel-card"><img src="assets/carousel-2.png" alt><span class="carousel-title">Wei Jun</span></div>
+        <div class="carousel-card"><img src="assets/nft-3.png" alt><span class="carousel-title">Lian Hua</span></div>
+        <div class="carousel-card"><img src="assets/carousel-3.png" alt><span class="carousel-title">Suki</span></div>
+        <div class="carousel-card"><img src="assets/nft-4.png" alt><span class="carousel-title">Yuki</span></div>
+        <div class="carousel-card"><img src="assets/carousel-4.png" alt><span class="carousel-title">Hana</span></div>
+        <div class="carousel-card"><img src="assets/nft-1.png" alt><span class="carousel-title">Shao</span></div>
+        <div class="carousel-card"><img src="assets/carousel-1.png" alt><span class="carousel-title">Mei Ling</span></div>
+        <div class="carousel-card"><img src="assets/nft-2.png" alt><span class="carousel-title">Rizan</span></div>
+        <div class="carousel-card"><img src="assets/carousel-2.png" alt><span class="carousel-title">Wei Jun</span></div>
+        <div class="carousel-card"><img src="assets/nft-3.png" alt><span class="carousel-title">Lian Hua</span></div>
+        <div class="carousel-card"><img src="assets/carousel-3.png" alt><span class="carousel-title">Suki</span></div>
+        <div class="carousel-card"><img src="assets/nft-4.png" alt><span class="carousel-title">Yuki</span></div>
+        <div class="carousel-card"><img src="assets/carousel-4.png" alt><span class="carousel-title">Hana</span></div>
+      </div>
+    </div>
+
+    <!-- Row 2: scrolls RIGHT -->
+    <div class="carousel-row">
+      <div class="carousel-track carousel-track-reverse">
+        <div class="carousel-card"><img src="assets/carousel-5.png" alt><span class="carousel-title">Jian Long</span></div>
+        <div class="carousel-card"><img src="assets/nft-3.png" alt><span class="carousel-title">Lian Hua</span></div>
+        <div class="carousel-card"><img src="assets/carousel-6.png" alt><span class="carousel-title">Kazuo</span></div>
+        <div class="carousel-card"><img src="assets/nft-1.png" alt><span class="carousel-title">Shao</span></div>
+        <div class="carousel-card"><img src="assets/carousel-2.png" alt><span class="carousel-title">Wei Jun</span></div>
+        <div class="carousel-card"><img src="assets/nft-4.png" alt><span class="carousel-title">Yuki</span></div>
+        <div class="carousel-card"><img src="assets/carousel-1.png" alt><span class="carousel-title">Mei Ling</span></div>
+        <div class="carousel-card"><img src="assets/carousel-3.png" alt><span class="carousel-title">Suki</span></div>
+        <div class="carousel-card"><img src="assets/carousel-5.png" alt><span class="carousel-title">Jian Long</span></div>
+        <div class="carousel-card"><img src="assets/nft-3.png" alt><span class="carousel-title">Lian Hua</span></div>
+        <div class="carousel-card"><img src="assets/carousel-6.png" alt><span class="carousel-title">Kazuo</span></div>
+        <div class="carousel-card"><img src="assets/nft-1.png" alt><span class="carousel-title">Shao</span></div>
+        <div class="carousel-card"><img src="assets/carousel-2.png" alt><span class="carousel-title">Wei Jun</span></div>
+        <div class="carousel-card"><img src="assets/nft-4.png" alt><span class="carousel-title">Yuki</span></div>
+        <div class="carousel-card"><img src="assets/carousel-1.png" alt><span class="carousel-title">Mei Ling</span></div>
+        <div class="carousel-card"><img src="assets/carousel-3.png" alt><span class="carousel-title">Suki</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MINT CTA — ALL-VISIBLE PROGRESSIVE WHITELIST FLOW -->
+  <section class="mint-section" id="mint">
+    <h2 class="mint-title fade-up">Get <span class="accent">Whitelisted</span> Now</h2>
+
+    <div class="mint-flow-all" id="mintFlow">
+
+      <!-- ▸ STEP 1: Follow -->
+      <div class="mint-card unlocked" id="mintCard1">
+        <div class="mint-card-inner">
+          <div class="mint-step-badge">STEP 1</div>
+          <h3 class="mint-card-title">Follow <span class="accent">@TheAkiraEth</span> on X</h3>
+          <a href="https://x.com/TheAkiraEth" target="_blank" rel="noopener noreferrer" class="btn-primary mint-card-btn" id="mintFollowBtn">
+            Open @TheAkiraEth
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </a>
+          <button class="btn-secondary mint-card-btn" id="mintAlreadyFollowBtn">I already follow</button>
+        </div>
+      </div>
+
+      <!-- Arrow -->
+      <div class="mint-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+      </div>
+
+      <!-- ▸ STEP 2: Quote Tweet -->
+      <div class="mint-card locked" id="mintCard2">
+        <div class="mint-card-inner">
+          <div class="mint-step-badge">STEP 2</div>
+          <h3 class="mint-card-title">Quote Tweet <span class="accent">&</span> Paste Link</h3>
+          <p class="mint-card-desc">Open the tweet, quote it on X, then drop your tweet link below.</p>
+          <a href="https://x.com/TheAkiraEth/status/2059314750136414237" target="_blank" rel="noopener noreferrer" class="btn-primary mint-card-btn" id="mintOpenTweetBtn">
+            Open the tweet
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </a>
+          <label class="mint-input-label">YOUR QUOTE TWEET LINK</label>
+          <div class="mint-input-wrap">
+            <input type="url" class="mint-input" id="mintQtInput" placeholder="https://x.com/you/status/…">
+            <button class="mint-paste-icon" id="mintClipboardBtn" title="Paste from clipboard">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              Paste
+            </button>
+          </div>
+          <button class="btn-secondary mint-card-btn" id="mintPasteBtn">Paste link to continue</button>
+        </div>
+      </div>
+
+      <!-- Arrow -->
+      <div class="mint-arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+      </div>
+
+      <!-- ▸ STEP 3: Mint -->
+      <div class="mint-card locked" id="mintCard3">
+        <div class="mint-card-inner">
+          <div class="mint-step-badge">STEP 3</div>
+          <h3 class="mint-card-title">You're <span class="accent" style="font-style:italic">in.</span></h3>
+          <div class="mint-token-row">
+            <span class="mint-token-tag">1 $Akira Token</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <span class="mint-token-nft">1 Akira NFT</span>
+          </div>
+          <p class="mint-card-desc">Mint your <span class="accent">$Akira Token</span> now. Each token redeems for 1 Akira NFT on June 3.</p>
+          <p class="mint-card-desc" style="color:#fff;font-weight:700;margin-top:-8px">Only <span class="accent">$Akira Token</span> holders can mint Akira NFT</p>
+          <p class="mint-card-desc" style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:-8px">Max 5 per wallet</p>
+
+          <div class="mint-progress-box">
+            <div class="mint-progress-header">
+              <span class="mint-progress-label">MINT PROGRESS</span>
+              <span class="mint-progress-count"><strong>0</strong> / 2,222 <span class="accent"></span></span>
+            </div>
+            <div class="mint-progress-bar-wrap">
+              <div class="mint-progress-bar-fill" style="width:0%"></div>
+            </div>
+            <div class="mint-progress-footer">
+              <span>ETH raised <strong>0</strong></span>
+              <span><strong>0</strong> left</span>
+            </div>
+          </div>
+
+          <div class="mint-qty-section">
+            <span class="mint-qty-label">QUANTITY</span>
+            <div class="mint-qty-grid">
+              <button class="mint-qty-btn selected" data-qty="1">1</button>
+              <button class="mint-qty-btn" data-qty="2">2</button>
+              <button class="mint-qty-btn" data-qty="3">3</button>
+              <button class="mint-qty-btn" data-qty="4">4</button>
+              <button class="mint-qty-btn" data-qty="5">5</button>
+            </div>
+            <div class="mint-qty-total">
+              <span>Total</span>
+              <span class="mint-qty-eth" id="mintTotalEth">0.00086 ETH</span>
+            </div>
+          </div>
+
+          <div class="mint-wallet-status" id="mintWalletStatus"></div>
+          <button class="btn-primary mint-card-btn" id="mintWalletBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
+            Connect Wallet to Mint
+          </button>
+          <div class="mint-tx-feedback" id="mintTxFeedback"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer" id="footer">
+    <div class="footer-top-bar"></div>
+    <div class="footer-inner">
+      <!-- Brand + Character + Links in one row -->
+      <div class="footer-main-row">
+        <div class="footer-brand">
+          <img src="assets/akira-logo-footer.png" alt="AKIRA" class="footer-logo">
+          <p class="footer-tagline" data-admin="footer_tagline">Sign up for the mailing list</p>
+          <form class="footer-email" id="footer-email-form">
+            <input type="email" placeholder="bean@example.com" class="footer-email-input" id="footer-email-input" required>
+            <button type="submit" class="footer-email-btn" aria-label="Subscribe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+          </form>
+        </div>
+        <div class="footer-character">
+          <img src="assets/footer-character.png" alt="AKIRA Character">
+        </div>
+        <div class="footer-links-group">
+          <div class="footer-col">
+            <h4 class="footer-col-title">About Us</h4>
+            <a href="coming-soon.html" class="footer-link">Projects</a>
+            <a href="coming-soon.html" class="footer-link">Blog</a>
+            <a href="coming-soon.html" class="footer-link">Committees</a>
+          </div>
+          <div class="footer-col">
+            <h4 class="footer-col-title">Technology</h4>
+            <a href="coming-soon.html" class="footer-link">ERC721A</a>
+          </div>
+        <div class="footer-col">
+          <h4 class="footer-col-title">World</h4>
+          <a href="coming-soon.html" class="footer-link">Lore</a>
+          <a href="coming-soon.html" class="footer-link">Anime</a>
+          <h4 class="footer-col-title" style="margin-top:20px;">Other</h4>
+          <a href="license.html" class="footer-link">License</a>
+          <a href="terms.html" class="footer-link">Terms &amp; Conditions</a>
+          <a href="privacy.html" class="footer-link">Privacy Policy</a>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-col-title">Akira</h4>
+          <div class="footer-socials">
+            <a href="coming-soon.html" class="footer-social-icon" title="Instagram"><svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+            <a href="https://x.com/TheAkiraEth" target="_blank" rel="noopener" class="footer-social-icon" title="X"><svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+            <a href="https://www.youtube.com/@AkiraETH" target="_blank" rel="noopener" class="footer-social-icon" title="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+            <a href="coming-soon.html" class="footer-social-icon" title="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom-bar"></div>
+  </footer>
+
+</main>
+
+<script src="script.js"></script>
+<script>
+// ===== ADMIN SYNC: Apply localStorage overrides from Admin Panel =====
+(function(){
+  document.querySelectorAll('[data-admin]').forEach(function(el){
+    var key = 'akira_' + el.getAttribute('data-admin');
+    var val = localStorage.getItem(key);
+    if(val !== null){
+      // Preserve SVG icons inside buttons
+      var svg = el.querySelector('svg');
+      if(svg){ el.textContent = ''; el.appendChild(svg); el.append(' ' + val); }
+      else { el.textContent = val; }
+    }
+  });
+})();
+</script>
+</body>
+</html>
