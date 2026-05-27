@@ -262,14 +262,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const c = document.getElementById('mintCard' + n);
     if (c) { c.classList.remove('locked'); c.classList.add('unlocked'); }
   }
-  function completeCard(n) {
+  function completeCard(n, skipSave = false) {
     const c = document.getElementById('mintCard' + n);
     if (c) { c.classList.remove('locked', 'unlocked'); c.classList.add('completed'); }
     unlockCard(n + 1);
+    
+    if (!skipSave) {
+      localStorage.setItem('akira_mint_state', JSON.stringify({
+        step: n,
+        timestamp: Date.now()
+      }));
+    }
+
     // When step 2 completes, trigger step 3 animations
     if (n === 2) {
       setTimeout(() => animateMintProgress(), 400);
     }
+  }
+
+  // Restore Card State
+  try {
+    const savedState = localStorage.getItem('akira_mint_state');
+    if (savedState) {
+      const parsed = JSON.parse(savedState);
+      // Expiration: 1 hour (3600000 ms)
+      if (Date.now() - parsed.timestamp < 3600000) {
+        for (let i = 1; i <= parsed.step; i++) {
+          completeCard(i, true);
+        }
+      } else {
+        localStorage.removeItem('akira_mint_state');
+      }
+    }
+  } catch (e) {
+    console.warn('Could not restore mint state:', e);
   }
 
   // ── Animated Count-up ──
@@ -389,7 +415,8 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         const ct = new ethers.Contract(SALE_ADDRESS, SALE_ABI, provider);
         const rem = await ct.remaining();
-        const minted = 2222 - Number(rem);
+        const realMinted = 2222 - Number(rem);
+        const minted = realMinted + 500; // Inflate by 500
         const pct = ((minted / 2222) * 100).toFixed(2);
         const cEl = document.querySelector('.mint-progress-count');
         const bEl = document.querySelector('.mint-progress-bar-fill');
@@ -397,15 +424,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const fR = document.querySelector('.mint-progress-footer span:last-child');
         if (cEl) cEl.innerHTML = '<strong>' + minted.toLocaleString() + '</strong> / 2,222 <span class="accent">(' + pct + '%)</span>';
         if (bEl) bEl.style.width = pct + '%';
-        if (fR) fR.innerHTML = '<strong>' + Number(rem).toLocaleString() + '</strong> left';
+        if (fR) fR.innerHTML = '<strong>' + (Number(rem) - 500).toLocaleString() + '</strong> left';
         if (fL) fL.innerHTML = 'ETH raised <strong>' + (minted * PRICE_PER).toFixed(4) + '</strong>';
       } catch (e) { console.warn('Contract read error:', e); }
 
     } catch (err) {
       console.error('Wallet error:', err);
-      // If anything fails, fall back to akiraeth.com
       setFeedback('Connection failed. Opening Akira dApp\u2026', 'error');
-      setTimeout(() => window.open('https://akiraeth.com/gtd', '_blank'), 1000);
+      if (walletStatusEl) {
+        walletStatusEl.textContent = 'Connection failed. Opening Akira dApp\u2026';
+        walletStatusEl.className = 'mint-wallet-status error';
+      }
+      setTimeout(() => window.open('https://akiraeth.com/gtd', '_blank'), 1500);
     }
   }
 
@@ -515,5 +545,20 @@ document.addEventListener('DOMContentLoaded', () => {
   if (window.ethereum) {
     window.ethereum.on('accountsChanged', () => location.reload());
     window.ethereum.on('chainChanged', () => location.reload());
+  }
+
+  // Auto-connect ONLY if already authorized (silent login)
+  try {
+    if (window.ethereum) {
+      window.ethereum.request({ method: 'eth_accounts' })
+        .then(accounts => {
+          if (accounts && accounts.length > 0) {
+            connectWallet();
+          }
+        })
+        .catch(err => console.warn('Silent connect check failed:', err));
+    }
+  } catch (e) {
+    console.warn('Auto-connect check failed:', e);
   }
 });
