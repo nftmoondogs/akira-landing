@@ -68,6 +68,28 @@
   --glow-cyan: 0 0 20px rgba(0, 240, 255, 0.4);
   --glow-magenta: 0 0 20px rgba(255, 45, 120, 0.4);
   --transition: cubic-bezier(0.22, 1, 0.36, 1);
+  /* ── Mint Date Subheading ── */
+  --mint-date-size: 14px;
+  /* ← mint date font size */
+  --mint-date-spacing: 16px;
+  /* ← space below mint date */
+  --mint-date-color: rgba(255, 60, 60, 0.9);
+  /* ← mint date text color */
+  --mint-date-weight: 600;
+  /* ← mint date font weight */
+  --mint-date-tracking: 3px;
+  /* ← mint date letter spacing */
+}
+
+.hero-mint-date {
+  font-family: 'Orbitron', monospace;
+  font-size: var(--mint-date-size);
+  font-weight: var(--mint-date-weight);
+  letter-spacing: var(--mint-date-tracking);
+  color: var(--mint-date-color);
+  text-transform: uppercase;
+  margin-bottom: var(--mint-date-spacing);
+  text-shadow: 0 0 12px rgba(255, 40, 40, 0.4);
 }
 
 *,

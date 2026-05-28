@@ -233,19 +233,30 @@ document.addEventListener('DOMContentLoaded', () => {
       const total = 2222;
       const pct = ((liveMinted / total) * 100).toFixed(2);
 
-      // Update hero stats (kill any running counter animation first)
+      // Update hero stats with smooth animation
       const heroMintedEl = document.querySelectorAll('.stat-value[data-count]');
       heroMintedEl.forEach(el => {
         if (el.closest('.stat-item')?.querySelector('.stat-label')?.textContent === 'Minted') {
           if (el._counterTimer) clearInterval(el._counterTimer);
-          el.dataset.count = liveMinted;
-          el.textContent = liveMinted.toLocaleString();
+          const from = parseInt(el.textContent.replace(/,/g, '')) || 0;
+          const to = liveMinted;
+          if (from === to) return;
+          el.dataset.count = to;
+          const dur = 1200;
+          const t0 = performance.now();
+          (function tick(now) {
+            const p = Math.min((now - t0) / dur, 1);
+            const ease = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(from + (to - from) * ease).toLocaleString();
+            if (p < 1) requestAnimationFrame(tick);
+          })(t0);
         }
       });
 
-      // Update hero progress bar
+      // Update hero progress bar with smooth transition
       const heroBar = document.querySelector('.mint-progress-bar[data-progress]');
       if (heroBar) {
+        heroBar.style.transition = 'width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
         heroBar.dataset.progress = pct;
         heroBar.style.width = pct + '%';
       }
