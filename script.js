@@ -88,11 +88,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const prefix = el.dataset.prefix || '';
         let current = 0;
         const step = Math.max(1, Math.floor(target / 60));
-        const timer = setInterval(() => {
+        el._counterTimer = setInterval(() => {
           current += step;
           if (current >= target) {
             current = target;
-            clearInterval(timer);
+            clearInterval(el._counterTimer);
           }
           el.textContent = prefix + current.toLocaleString() + suffix;
         }, 20);
@@ -233,10 +233,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const total = 2222;
       const pct = ((liveMinted / total) * 100).toFixed(2);
 
-      // Update hero stats
+      // Update hero stats (kill any running counter animation first)
       const heroMintedEl = document.querySelectorAll('.stat-value[data-count]');
       heroMintedEl.forEach(el => {
         if (el.closest('.stat-item')?.querySelector('.stat-label')?.textContent === 'Minted') {
+          if (el._counterTimer) clearInterval(el._counterTimer);
           el.dataset.count = liveMinted;
           el.textContent = liveMinted.toLocaleString();
         }
