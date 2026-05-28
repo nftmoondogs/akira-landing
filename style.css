@@ -69,11 +69,11 @@
   --glow-magenta: 0 0 20px rgba(255, 45, 120, 0.4);
   --transition: cubic-bezier(0.22, 1, 0.36, 1);
   /* ── Mint Date Subheading ── */
-  --mint-date-size: 14px;
+  --mint-date-size: 22px;
   /* ← mint date font size */
   --mint-date-spacing: 16px;
   /* ← space below mint date */
-  --mint-date-color: rgba(255, 60, 60, 0.9);
+  --mint-date-color: rgb(255, 255, 255);
   /* ← mint date text color */
   --mint-date-weight: 600;
   /* ← mint date font weight */
@@ -89,7 +89,7 @@
   color: var(--mint-date-color);
   text-transform: uppercase;
   margin-bottom: var(--mint-date-spacing);
-  text-shadow: 0 0 12px rgba(255, 40, 40, 0.4);
+  text-shadow: 0 0 12px rgb(202, 0, 0);
 }
 
 *,
@@ -1308,6 +1308,7 @@ body::after {
   font-size: 17px;
   padding: 22px 48px;
 }
+
 /* === ALL-VISIBLE PROGRESSIVE FLOW === */
 .mint-flow-all {
   position: relative;
@@ -1324,7 +1325,7 @@ body::after {
   display: flex;
   justify-content: center;
   padding: 12px 0;
-  color: rgba(255,255,255,0.2);
+  color: rgba(255, 255, 255, 0.2);
   z-index: 1;
   position: relative;
 }
@@ -1337,9 +1338,10 @@ body::after {
   overflow: hidden;
   transition: opacity 0.5s ease, filter 0.5s ease;
 }
+
 .mint-card-inner {
-  background: rgba(0,0,0,0.85);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 32px 36px;
   text-align: center;
@@ -1350,6 +1352,7 @@ body::after {
   opacity: 0.35;
   filter: grayscale(0.8);
 }
+
 .mint-card.locked .mint-card-title,
 .mint-card.locked .mint-card-desc,
 .mint-card.locked .mint-step-badge {
@@ -1367,13 +1370,15 @@ body::after {
   opacity: 1;
   filter: none;
 }
+
 .mint-card.completed .mint-card-inner {
-  border-color: rgba(0,255,100,0.2);
+  border-color: rgba(0, 255, 100, 0.2);
 }
+
 .mint-card.completed .mint-step-badge {
-  background: rgba(0,255,100,0.15);
+  background: rgba(0, 255, 100, 0.15);
   color: #2aff6e;
-  border-color: rgba(0,255,100,0.3);
+  border-color: rgba(0, 255, 100, 0.3);
 }
 
 /* Step badge */
@@ -1385,8 +1390,8 @@ body::after {
   letter-spacing: 2.5px;
   text-transform: uppercase;
   color: var(--magenta);
-  background: rgba(255,45,120,0.1);
-  border: 1px solid rgba(255,45,120,0.25);
+  background: rgba(255, 45, 120, 0.1);
+  border: 1px solid rgba(255, 45, 120, 0.25);
   padding: 4px 14px;
   border-radius: 6px;
   margin-bottom: 16px;
@@ -1407,7 +1412,7 @@ body::after {
 .mint-card-desc {
   font-family: 'Inter', sans-serif;
   font-size: 16px;
-  color: rgba(255,255,255,0.65);
+  color: rgba(255, 255, 255, 0.65);
   line-height: 1.7;
   margin-bottom: 16px;
 }
@@ -1432,16 +1437,17 @@ body::after {
   text-transform: uppercase;
   letter-spacing: 1px;
   color: #fff;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
   width: 100%;
 }
+
 .btn-secondary:hover {
-  background: rgba(255,255,255,0.12);
-  border-color: rgba(255,255,255,0.35);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
 /* Input field */
@@ -1451,17 +1457,18 @@ body::after {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255, 255, 255, 0.45);
   font-weight: 600;
   margin-top: 20px;
   margin-bottom: 8px;
   text-align: left;
 }
+
 .mint-input {
   width: 100%;
   padding: 14px 18px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 10px;
   color: #fff;
   font-family: 'Inter', sans-serif;
@@ -1471,9 +1478,11 @@ body::after {
   transition: border-color 0.2s;
   margin-bottom: 12px;
 }
+
 .mint-input::placeholder {
-  color: rgba(255,255,255,0.3);
+  color: rgba(255, 255, 255, 0.3);
 }
+
 .mint-input:focus {
   border-color: var(--magenta);
 }
@@ -1486,21 +1495,23 @@ body::after {
   gap: 0;
   margin-bottom: 12px;
 }
+
 .mint-input-wrap .mint-input {
   margin-bottom: 0;
   border-radius: 10px 0 0 10px;
   flex: 1;
 }
+
 .mint-paste-icon {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 0 18px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-left: none;
   border-radius: 0 10px 10px 0;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255, 255, 255, 0.5);
   font-family: 'Space Grotesk', sans-serif;
   font-size: 13px;
   font-weight: 600;
@@ -1509,8 +1520,9 @@ body::after {
   white-space: nowrap;
   width: auto;
 }
+
 .mint-paste-icon:hover {
-  background: rgba(255,255,255,0.14);
+  background: rgba(255, 255, 255, 0.14);
   color: #fff;
 }
 
@@ -1520,12 +1532,13 @@ body::after {
   align-items: center;
   gap: 12px;
   justify-content: center;
-  background: rgba(255,0,0,0.08);
-  border: 1px solid rgba(255,0,0,0.2);
+  background: rgba(255, 0, 0, 0.08);
+  border: 1px solid rgba(255, 0, 0, 0.2);
   border-radius: 12px;
   padding: 14px 20px;
   margin-bottom: 20px;
 }
+
 .mint-token-tag {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 16px;
@@ -1533,10 +1546,12 @@ body::after {
   color: var(--magenta);
   white-space: nowrap;
 }
+
 .mint-token-row svg {
   color: var(--magenta);
   flex-shrink: 0;
 }
+
 .mint-token-nft {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 16px;
@@ -1546,13 +1561,14 @@ body::after {
 
 /* Mint progress box */
 .mint-progress-box {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 20px 24px;
   margin-bottom: 20px;
   text-align: left;
 }
+
 .mint-progress-header,
 .mint-progress-footer {
   display: flex;
@@ -1560,33 +1576,38 @@ body::after {
   align-items: baseline;
   font-family: 'Space Grotesk', sans-serif;
   font-size: 13px;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255, 255, 255, 0.4);
 }
+
 .mint-progress-label {
   font-size: 12px;
   letter-spacing: 2px;
   text-transform: uppercase;
   font-weight: 600;
 }
+
 .mint-progress-count {
   font-family: 'Space Grotesk', monospace;
   font-size: 20px;
   font-weight: 700;
   color: #fff;
 }
+
 .mint-progress-bar-wrap {
   height: 12px;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 999px;
   overflow: hidden;
   margin: 14px 0 16px;
 }
+
 .mint-progress-bar-fill {
   height: 100%;
   background: linear-gradient(90deg, var(--magenta), #ff4444);
   border-radius: 999px;
   transition: width 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
+
 .mint-progress-footer strong {
   color: #fff;
   font-family: 'Space Grotesk', monospace;
@@ -1598,31 +1619,34 @@ body::after {
   margin-bottom: 20px;
   text-align: left;
 }
+
 .mint-qty-label {
   display: block;
   font-family: 'Space Grotesk', sans-serif;
   font-size: 10px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255, 255, 255, 0.45);
   font-weight: 600;
   margin-bottom: 10px;
 }
+
 .mint-qty-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 8px;
   margin-bottom: 12px;
 }
+
 .mint-qty-btn {
   height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   background: none;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255, 255, 255, 0.55);
   font-family: 'Space Grotesk', sans-serif;
   font-size: 15px;
   font-weight: 600;
@@ -1631,23 +1655,27 @@ body::after {
   width: auto;
   padding: 0;
 }
+
 .mint-qty-btn:hover {
-  border-color: rgba(255,255,255,0.3);
+  border-color: rgba(255, 255, 255, 0.3);
   color: #fff;
 }
+
 .mint-qty-btn.selected {
   border-color: var(--magenta);
-  background: rgba(255,0,0,0.1);
+  background: rgba(255, 0, 0, 0.1);
   color: #fff;
 }
+
 .mint-qty-total {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   font-family: 'Space Grotesk', sans-serif;
   font-size: 12px;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255, 255, 255, 0.45);
 }
+
 .mint-qty-eth {
   color: #fff;
   font-family: 'Space Grotesk', monospace;
@@ -1670,9 +1698,11 @@ body::after {
   min-height: 20px;
   letter-spacing: 0.5px;
 }
+
 .mint-wallet-status.connected {
   color: #2aff6e;
 }
+
 .mint-wallet-status.error {
   color: #ff4444;
 }
@@ -1686,12 +1716,15 @@ body::after {
   min-height: 20px;
   font-weight: 600;
 }
+
 .mint-tx-feedback.success {
   color: #2aff6e;
 }
+
 .mint-tx-feedback.error {
   color: #ff4444;
 }
+
 .mint-tx-feedback.pending {
   color: #ffaa00;
 }
