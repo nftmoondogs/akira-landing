@@ -206,6 +206,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'function price() view returns (uint256)'
   ];
   const MAINNET_CHAIN_ID = 1;
+  const INFLATE = 2000; // Frontend inflation offset
+  const PUBLIC_RPC = 'https://eth.llamarpc.com';
 
   const navCta = document.querySelector('.nav-cta');
   const navCtaOrigHTML = navCta ? navCta.innerHTML : '';
@@ -218,6 +220,54 @@ document.addEventListener('DOMContentLoaded', () => {
   let walletSigner = null;
   let connectedAddress = null;
   let navInWalletMode = false;
+  let liveMinted = null; // Updated by fetchLiveMintData
+
+  // ── Fetch live mint data on page load (no wallet needed) ──
+  async function fetchLiveMintData() {
+    try {
+      const provider = new ethers.JsonRpcProvider(PUBLIC_RPC);
+      const ct = new ethers.Contract(SALE_ADDRESS, SALE_ABI, provider);
+      const rem = await ct.remaining();
+      const realMinted = 2222 - Number(rem);
+      liveMinted = realMinted + INFLATE;
+      const total = 2222;
+      const pct = ((liveMinted / total) * 100).toFixed(2);
+
+      // Update hero stats
+      const heroMintedEl = document.querySelectorAll('.stat-value[data-count]');
+      heroMintedEl.forEach(el => {
+        if (el.closest('.stat-item')?.querySelector('.stat-label')?.textContent === 'Minted') {
+          el.dataset.count = liveMinted;
+          el.textContent = liveMinted.toLocaleString();
+        }
+      });
+
+      // Update hero progress bar
+      const heroBar = document.querySelector('.mint-progress-bar[data-progress]');
+      if (heroBar) {
+        heroBar.dataset.progress = pct;
+        heroBar.style.width = pct + '%';
+      }
+
+      // Update step 3 mint progress (if visible)
+      const cEl = document.querySelector('.mint-progress-count');
+      const bEl = document.querySelector('.mint-progress-bar-fill');
+      const fL = document.querySelector('.mint-progress-footer span:first-child');
+      const fR = document.querySelector('.mint-progress-footer span:last-child');
+      if (cEl) cEl.innerHTML = '<strong>' + liveMinted.toLocaleString() + '</strong> / 2,222 <span class="accent">(' + pct + '%)</span>';
+      if (bEl) bEl.style.width = pct + '%';
+      if (fR) fR.innerHTML = '<strong>' + (total - liveMinted).toLocaleString() + '</strong> left';
+      if (fL) fL.innerHTML = 'ETH raised <strong>' + (liveMinted * PRICE_PER).toFixed(4) + '</strong>';
+
+      console.log('[Akira] Live mint data:', realMinted, '+ inflate =', liveMinted);
+    } catch (e) {
+      console.warn('[Akira] Public RPC mint read failed:', e);
+    }
+  }
+
+  // Fetch immediately and refresh every 30s
+  fetchLiveMintData();
+  setInterval(fetchLiveMintData, 30000);
 
   const W_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>';
 
@@ -310,12 +360,12 @@ document.addEventListener('DOMContentLoaded', () => {
     })(t0);
   }
 
-  // Animate progress on scroll
+  // Animate progress on scroll (uses live data if available)
   let progAnimated = false;
   function animateMintProgress() {
     if (progAnimated) return;
     progAnimated = true;
-    const minted = 514, total = 2222;
+    const minted = liveMinted || 2000, total = 2222;
     const pct = ((minted / total) * 100).toFixed(2);
     const bar = document.querySelector('.mint-progress-bar-fill');
     const countStrong = document.querySelector('.mint-progress-count strong');
@@ -411,12 +461,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (navCta) { navCta.innerHTML = W_SVG + ' ' + shortAddr(address); }
       setFeedback('Wallet connected. Select quantity and mint!', 'success');
 
-      // Read live contract data
+      // Read live contract data (uses wallet provider for freshest data)
       try {
         const ct = new ethers.Contract(SALE_ADDRESS, SALE_ABI, provider);
         const rem = await ct.remaining();
         const realMinted = 2222 - Number(rem);
-        const minted = realMinted + 500; // Inflate by 500
+        const minted = realMinted + INFLATE;
+        liveMinted = minted; // Update global
         const pct = ((minted / 2222) * 100).toFixed(2);
         const cEl = document.querySelector('.mint-progress-count');
         const bEl = document.querySelector('.mint-progress-bar-fill');
@@ -424,7 +475,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const fR = document.querySelector('.mint-progress-footer span:last-child');
         if (cEl) cEl.innerHTML = '<strong>' + minted.toLocaleString() + '</strong> / 2,222 <span class="accent">(' + pct + '%)</span>';
         if (bEl) bEl.style.width = pct + '%';
-        if (fR) fR.innerHTML = '<strong>' + (Number(rem) - 500).toLocaleString() + '</strong> left';
+        if (fR) fR.innerHTML = '<strong>' + (2222 - minted).toLocaleString() + '</strong> left';
         if (fL) fL.innerHTML = 'ETH raised <strong>' + (minted * PRICE_PER).toFixed(4) + '</strong>';
       } catch (e) { console.warn('Contract read error:', e); }
 
